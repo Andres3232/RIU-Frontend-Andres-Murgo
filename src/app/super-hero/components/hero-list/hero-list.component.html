@@ -1,0 +1,45 @@
+<div class="overflow-x-auto">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Power</th>
+        <th>Description</th>
+        <th class="text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (hero of heroes(); track hero.id) {
+        <tr class="hover:bg-base-200 transition-colors">
+          <td>{{ hero.id }}</td>
+          <td class="font-semibold">{{ hero.name }}</td>
+          <td>{{ hero.power }}</td>
+          <td>{{ hero.description }}</td>
+          <td>
+            <div class="flex gap-2 justify-center">
+              <button
+                class="btn btn-sm btn-info btn-outline"
+                (click)="edit.emit(hero)"
+              >
+                Edit
+              </button>
+              <button
+                class="btn btn-sm btn-error btn-outline"
+                (click)="delete.emit(hero)"
+              >
+                Remove
+              </button>
+            </div>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="5" class="text-center text-base-content/60 py-8">
+            No heroes found
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
