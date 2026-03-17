@@ -1,5 +1,8 @@
 
-  <hero-list
+
+   <app-pagination
+
+    />  <hero-list
     [heroes]="heroService.getAll()"
     (edit)="onEdit($event)"
     (delete)="onDelete($event)"

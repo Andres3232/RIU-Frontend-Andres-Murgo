@@ -4,14 +4,16 @@ import {
   inject,
 } from '@angular/core';
 
-import { SuperHeroService } from '../../services/super-hero-service';
+
 
 import { HeroListComponent } from '../../components/hero-list/hero-list.component';
 import type { SuperHero } from '../../models/super-hero.interface';
+import { PaginationComponent } from "../../../shared/components/pagination/pagination.component";
+import { SuperHeroService } from '../../services/super-hero.service';
 
 @Component({
   selector: 'app-home-page',
-  imports: [HeroListComponent],
+  imports: [HeroListComponent, PaginationComponent],
   templateUrl: './home-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
