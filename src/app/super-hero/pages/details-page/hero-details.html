@@ -1,1 +1,64 @@
-<h1>Details</h1>
+<div class="container mx-auto p-6">
+  <div class="flex items-center gap-4 mb-4">
+    <button class="btn btn-ghost btn-sm" (click)="goBack()">← Back</button>
+    <h1 class="text-2xl font-bold">
+      {{ isNew() ? 'New Hero' : hero()?.name }}
+    </h1>
+  </div>
+  <div class="divider"></div>
+
+  <form
+    class="grid grid-cols-1 sm:grid-cols-2 gap-4"
+    [formGroup]="heroForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="flex flex-col gap-2">
+      <h2 class="text-2xl font-bold h-12">General Information</h2>
+      <input
+        type="text"
+        placeholder="Name"
+        class="input input-bordered w-full"
+        formControlName="name"
+        [class.border-red-500]="heroForm.get('name')?.errors && heroForm.get('name')?.touched"
+      />
+      <form-error-label [control]="heroForm.get('name')!" />
+
+      <input
+        type="text"
+        placeholder="Power"
+        class="input input-bordered w-full"
+        formControlName="power"
+        [class.border-red-500]="heroForm.get('power')?.errors && heroForm.get('power')?.touched"
+      />
+      <form-error-label [control]="heroForm.get('power')!" />
+
+      <textarea
+        class="textarea textarea-bordered"
+        placeholder="Description"
+        rows="6"
+        formControlName="description"
+        [class.border-red-500]="heroForm.get('description')?.errors && heroForm.get('description')?.touched"
+      ></textarea>
+      <form-error-label [control]="heroForm.get('description')!" />
+
+      <div class="flex gap-2 mt-4">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="heroForm.invalid && heroForm.dirty"
+        >
+          {{ isNew() ? 'Create Hero' : 'Save Changes' }}
+        </button>
+        <button type="button" class="btn btn-ghost" (click)="goBack()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+
+  @if (wasSaved()) {
+  <div class="alert alert-success fixed bottom-4 right-4 w-80 animate-fadeIn">
+    <span>Changes saved successfully</span>
+  </div>
+  }
+</div>
