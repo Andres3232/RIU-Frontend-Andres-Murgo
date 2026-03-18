@@ -12,15 +12,15 @@ import {
   templateUrl: './pagination.component.html',
 })
 export class PaginationComponent {
-  currentPage = 1
-  totalPages = 10
+  currentPage = input.required<number>();
+  totalPages = input.required<number>();
 
   pageChange = output<number>();
 
-
+  activePage = linkedSignal(this.currentPage);
 
   pages = () => {
-    const total = this.totalPages;
+    const total = this.totalPages();
     return Array.from({ length: total }, (_, i) => i + 1);
   };
 }

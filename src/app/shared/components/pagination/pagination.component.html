@@ -1,8 +1,8 @@
 <div class="join">
   <button
     class="join-item btn btn-md"
-    [disabled]="currentPage <= 1"
-    (click)="pageChange.emit(currentPage - 1)"
+    [disabled]="currentPage() <= 1"
+    (click)="pageChange.emit(currentPage() - 1)"
   >
     «
   </button>
@@ -10,7 +10,7 @@
   @for (page of pages(); track page) {
     <button
       class="join-item btn btn-md"
-      [class.btn-primary]="page === currentPage"
+      [class.btn-primary]="page === activePage()"
       (click)="pageChange.emit(page)"
     >
       {{ page }}
@@ -19,8 +19,8 @@
 
   <button
     class="join-item btn btn-md"
-    [disabled]="currentPage >= totalPages"
-    (click)="pageChange.emit(currentPage + 1)"
+    [disabled]="currentPage() >= totalPages()"
+    (click)="pageChange.emit(currentPage() + 1)"
   >
     »
   </button>
