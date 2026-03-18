@@ -19,6 +19,7 @@
         placeholder="Name"
         class="input input-bordered w-full"
         formControlName="name"
+        appUppercase
         [class.border-red-500]="heroForm.get('name')?.errors && heroForm.get('name')?.touched"
       />
       <form-error-label [control]="heroForm.get('name')!" />

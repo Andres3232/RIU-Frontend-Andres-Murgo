@@ -7,10 +7,11 @@ import { SuperHeroService } from '../../services/super-hero.service';
 import { FormErrorLabel } from '../../../shared/components/form-error-label/form-error-label';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
+import { UppercaseDirective } from '../../../shared/directives/uppercase.directive';
 
 @Component({
   selector: 'hero-details',
-  imports: [ReactiveFormsModule, FormErrorLabel],
+  imports: [ReactiveFormsModule, FormErrorLabel, UppercaseDirective],
   templateUrl: './hero-details.html',
 })
 export default class HeroDetails implements OnInit {
