@@ -20,13 +20,14 @@
             <div class="flex gap-2 justify-center">
               <button
                 class="btn btn-sm btn-info btn-outline"
-                (click)="edit.emit(hero)"
+                [routerLink]="['/hero', hero.id]"
               >
                 Edit
               </button>
               <button
                 class="btn btn-sm btn-error btn-outline"
-                (click)="delete.emit(hero)"
+                (click)="openModal(hero)"
+                
               >
                 Remove
               </button>
@@ -43,3 +44,8 @@
     </tbody>
   </table>
 </div>
+
+<app-modal
+ #modal
+ (confirmRemove)="onDelete($event)"
+/>
