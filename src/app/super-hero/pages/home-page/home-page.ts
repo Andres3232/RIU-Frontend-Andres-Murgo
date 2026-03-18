@@ -9,7 +9,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SuperHeroService } from '../../services/super-hero.service';
 import { PaginationService } from '../../../shared/components/pagination/pagination.service';
 import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
@@ -26,12 +26,23 @@ import { ModalComponent } from '../../../shared/components/modals/modal.componen
 export default class HomePage {
   heroService = inject(SuperHeroService);
   private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
 
   paginationService = inject(PaginationService);
 
   private deleteModal = viewChild.required<ModalComponent>('deleteModal');
   heroToDelete = signal<SuperHero | null>(null);
+  wasSaved = signal(false);
+
+  constructor() {
+    const saved = this.activatedRoute.snapshot.queryParamMap.get('saved');
+    if (saved === 'true') {
+      this.wasSaved.set(true);
+      this.router.navigate([], { queryParams: {}, replaceUrl: true });
+      setTimeout(() => this.wasSaved.set(false), 3000);
+    }
+  }
 
   private rawSearch = signal('');
   searchTerm = signal('');

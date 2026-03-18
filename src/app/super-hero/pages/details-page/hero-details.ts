@@ -23,7 +23,6 @@ export default class HeroDetails implements OnInit {
 
   hero = signal<SuperHero | null>(null);
   isNew = signal(false);
-  wasSaved = signal(false);
 
   heroForm = this.fb.group({
     name: ['', Validators.required],
@@ -71,15 +70,14 @@ export default class HeroDetails implements OnInit {
       this.heroService.create(heroData)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/home'], { queryParams: { saved: 'true' } });
       });
       
     } else {
       this.heroService.update(this.hero()!.id, heroData)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
-        this.wasSaved.set(true);
-        setTimeout(() => this.wasSaved.set(false), 3000);
+        this.router.navigate(['/home'], { queryParams: { saved: 'true' } });
       });
     }
   }
