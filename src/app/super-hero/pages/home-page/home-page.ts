@@ -74,12 +74,8 @@ export default class HomePage {
     this.router.navigate(['/hero/new']);
   }
 
-  onEdit(hero: SuperHero): void {
-    this.router.navigate(['/hero', hero.id, 'edit']);
-  }
-
   removeHero(hero: SuperHero): void {
-    console.log('on delete ejecutando')
+    console.log('on delete ejecutando');
     this.heroService.delete(hero.id);
   }
 }
