@@ -1,12 +1,14 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   computed,
   effect,
   inject,
   signal,
   viewChild,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { SuperHeroService } from '../../services/super-hero.service';
 import { PaginationService } from '../../../shared/components/pagination/pagination.service';
@@ -24,6 +26,7 @@ import { ModalComponent } from '../../../shared/components/modals/modal.componen
 export default class HomePage {
   heroService = inject(SuperHeroService);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
   paginationService = inject(PaginationService);
 
@@ -75,7 +78,8 @@ export default class HomePage {
   }
 
   removeHero(hero: SuperHero): void {
-    console.log('on delete ejecutando');
-    this.heroService.delete(hero.id);
+    this.heroService.delete(hero.id)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
   }
 }

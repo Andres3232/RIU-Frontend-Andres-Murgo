@@ -1,9 +1,15 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
+import { delay, Observable, of, tap } from 'rxjs';
 import type { SuperHero } from '../models/super-hero.interface';
+import { LoadingService } from '../../shared/services/loading.service';
+
+const SIMULATED_DELAY = 600;
 
 @Injectable({ providedIn: 'root' })
 export class SuperHeroService {
-  private superHeros = signal<SuperHero[]>([
+  private loadingService = inject(LoadingService);
+
+  private superHeroes = signal<SuperHero[]>([
     { id: 1, name: 'Superman', power: 'Flight', description: 'Man of Steel' },
     {
       id: 2,
@@ -61,31 +67,47 @@ export class SuperHeroService {
     },
   ]);
 
+  getAll = computed(() => this.superHeroes());
 
-  getAll = computed(() => this.superHeros());
-
-  getById(id: number) {
-    return this.superHeros().find((hero) => hero.id === id);
+  getById(id: number): SuperHero | undefined {
+    return this.superHeroes().find((hero) => hero.id === id);
   }
 
-  searchByName(name: string) {
-    return this.superHeros().filter((hero) =>
+  searchByName(name: string): SuperHero[] {
+    return this.superHeroes().filter((hero) =>
       hero.name.toLowerCase().includes(name.toLowerCase()),
     );
   }
 
-  create(superHero: Omit<SuperHero, 'id'>): void {
-    const nextId = Math.max(...this.superHeros().map(h => h.id), 0) + 1;
-    this.superHeros.update(heroes => [...heroes, { ...superHero, id: nextId }]);
+  create(superHero: Omit<SuperHero, 'id'>): Observable<SuperHero> {
+    const nextId = Math.max(...this.superHeroes().map((h) => h.id), 0) + 1;
+    const newHero: SuperHero = { ...superHero, id: nextId };
+
+    return this.withSimulatedDelay(newHero, () => {
+      this.superHeroes.update((heroes) => [...heroes, newHero]);
+    });
   }
 
-  update(id: number, superHero: Partial<Omit<SuperHero, 'id'>>): void {
-    this.superHeros.update(heroes =>
-      heroes.map(hero => hero.id === id ? { ...hero, ...superHero } : hero)
+  update(id: number, superHero: Partial<Omit<SuperHero, 'id'>>): Observable<void> {
+    return this.withSimulatedDelay(undefined as void, () => {
+      this.superHeroes.update((heroes) =>
+        heroes.map((hero) => (hero.id === id ? { ...hero, ...superHero } : hero)),
+      );
+    });
+  }
+
+  delete(id: number): Observable<void> {
+    return this.withSimulatedDelay(undefined as void, () => {
+      this.superHeroes.update((heroes) => heroes.filter((hero) => hero.id !== id));
+    });
+  }
+
+  private withSimulatedDelay<T>(value: T, operation: () => void): Observable<T> {
+    this.loadingService.show();
+    return of(value).pipe(
+      delay(SIMULATED_DELAY),
+      tap(() => operation()),
+      tap({ finalize: () => this.loadingService.hide() }),
     );
-  }
-
-  delete(id: number) {
-    this.superHeros.update((heroes) => heroes.filter((hero) => hero.id !== id));
   }
 }

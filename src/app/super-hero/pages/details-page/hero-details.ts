@@ -1,4 +1,5 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import type { SuperHero } from '../../models/super-hero.interface';
@@ -16,6 +17,7 @@ export default class HeroDetails implements OnInit {
   private heroService = inject(SuperHeroService);
   private router = inject(Router);
   private fb = inject(FormBuilder);
+  private destroyRef = inject(DestroyRef);
   activatedRoute = inject(ActivatedRoute);
 
   hero = signal<SuperHero | null>(null);
@@ -51,7 +53,7 @@ export default class HeroDetails implements OnInit {
     }
   }
 
-  async onSubmit(): Promise<void> {
+  onSubmit(): void {
     if (this.heroForm.invalid) {
       this.heroForm.markAllAsTouched();
       return;
@@ -65,14 +67,19 @@ export default class HeroDetails implements OnInit {
     };
 
     if (this.isNew()) {
-      this.heroService.create(heroData);
-
-      this.router.navigate(['/home']);
+      this.heroService.create(heroData)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.router.navigate(['/home']);
+      });
+      
     } else {
-      this.heroService.update(this.hero()!.id, heroData);
-
-      this.wasSaved.set(true);
-      setTimeout(() => this.wasSaved.set(false), 3000);
+      this.heroService.update(this.hero()!.id, heroData)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.wasSaved.set(true);
+        setTimeout(() => this.wasSaved.set(false), 3000);
+      });
     }
   }
 
