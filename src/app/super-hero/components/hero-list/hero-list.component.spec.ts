@@ -66,7 +66,7 @@ describe('HeroListComponent', () => {
       );
 
       // Assert
-      expect(firstRowCells[1].textContent.trim()).toBe('Superman');
+      expect(firstRowCells[1].textContent.trim()).toBe('SUPERMAN');
     });
 
     it('should show empty message when no heroes', () => {

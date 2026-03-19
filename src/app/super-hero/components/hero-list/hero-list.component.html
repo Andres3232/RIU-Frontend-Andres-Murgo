@@ -13,7 +13,7 @@
       @for (hero of heroes(); track hero.id) {
         <tr class="hover:bg-base-200 transition-colors">
           <td>{{ hero.id }}</td>
-          <td class="font-semibold">{{ hero.name }}</td>
+          <td class="font-semibold">{{ hero.name | uppercase}}</td>
           <td>{{ hero.power }}</td>
           <td>{{ hero.description }}</td>
           <td>
