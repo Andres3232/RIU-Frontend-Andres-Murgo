@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LoadingService } from './shared/services/loading.service';
+import { LoadingService } from '@shared/services/loading.service';
+
 
 @Component({
   selector: 'app-root',

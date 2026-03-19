@@ -11,11 +11,12 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SuperHeroService } from '../../services/super-hero.service';
-import { PaginationService } from '../../../shared/components/pagination/pagination.service';
-import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 import { HeroListComponent } from '../../components/hero-list/hero-list.component';
 import type { SuperHero } from '../../models/super-hero.interface';
-import { ModalComponent } from '../../../shared/components/modals/modal.component';
+import { PaginationComponent } from '@shared/components/pagination/pagination.component';
+import { PaginationService } from '@shared/components/pagination/pagination.service';
+import { ModalComponent } from '@shared/components/modals/modal.component';
+
 
 @Component({
   selector: 'app-home-page',

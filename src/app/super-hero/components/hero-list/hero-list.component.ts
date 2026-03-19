@@ -7,8 +7,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import type { SuperHero } from '../../models/super-hero.interface';
-import { ModalComponent } from "../../../shared/components/modals/modal.component";
 import { RouterLink } from '@angular/router';
+import { ModalComponent } from '@shared/components/modals/modal.component';
 
 @Component({
   selector: 'hero-list',
