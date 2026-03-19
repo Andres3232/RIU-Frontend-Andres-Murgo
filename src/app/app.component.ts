@@ -9,5 +9,6 @@ import { LoadingService } from './shared/services/loading.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  title = 'super-hero-app';
   loadingService = inject(LoadingService);
 }
