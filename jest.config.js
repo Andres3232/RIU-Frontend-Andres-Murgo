@@ -16,6 +16,7 @@ module.exports = {
     '^@shared/(.*)$': '<rootDir>/src/app/shared/$1',
     '^@models/(.*)$': '<rootDir>/src/app/super-hero/models/$1',
     '^@services/(.*)$': '<rootDir>/src/app/super-hero/services/$1',
+    '^@utils/(.*)$': '<rootDir>/src/app/utils/$1',
   },
   testMatch: ['**/+(*.)+(spec).+(ts)'],
   coverageDirectory: 'coverage',

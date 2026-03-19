@@ -7,7 +7,8 @@
     "paths": {
       "@shared/*": ["./src/app/shared/*"],
       "@models/*": ["./src/app/super-hero/models/*"],
-      "@services/*": ["./src/app/super-hero/services/*"]
+      "@services/*": ["./src/app/super-hero/services/*"],
+      "@utils/*": ["./src/app/utils/*"]
     },
     "strict": true,
     "noImplicitOverride": true,

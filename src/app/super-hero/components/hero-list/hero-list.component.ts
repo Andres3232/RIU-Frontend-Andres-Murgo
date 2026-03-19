@@ -6,7 +6,6 @@ import {
   signal,
   ViewChild,
 } from '@angular/core';
-
 import { RouterLink } from '@angular/router';
 import type { SuperHero } from '@models/super-hero.interface';
 import { ModalComponent } from '@shared/components/modals/modal.component';

@@ -1,13 +1,12 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import type { SuperHero } from '@models/super-hero.interface';
+import { map } from 'rxjs';
 import { SuperHeroService } from '@services/super-hero.service';
 import { FormErrorLabel } from '@shared/components/form-error-label/form-error-label';
 import { UppercaseDirective } from '@shared/directives/uppercase.directive';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs';
+import type { SuperHero } from '@models/super-hero.interface';
 
 
 @Component({
