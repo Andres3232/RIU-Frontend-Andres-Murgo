@@ -1,0 +1,10 @@
+node_modules
+dist
+coverage
+.git
+.gitignore
+.angular
+*.md
+jest.config.js
+tsconfig.spec.json
+src/**/*.spec.ts

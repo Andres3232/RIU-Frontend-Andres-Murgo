@@ -1,59 +1,107 @@
-# SuperHeroApp
+# RIU-Frontend-Andres-Murgo
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.22.
+A Single Page Application (SPA) built with Angular 19 for superhero management.
+Allows you to list, filter, add, edit, and delete superheroes — all powered by Signals, Tailwind CSS, DaisyUI, lazy-loaded routes, and a clean modular architecture.
 
-## Development server
+## What does this app do?
 
-To start a local development server, run:
+- Paginated list of superheroes with DaisyUI table
+- Real-time search/filter by name (with debounce)
+- Add, edit, and delete superheroes (with confirmation modal)
+- Reactive forms with custom validations
+- Custom directive for uppercase input on hero name
+- Loading spinner overlay during create/update/delete operations
+- All data is managed locally in-memory (no backend required)
 
-```bash
-ng serve
+## Main Technologies
+
+- **Angular 19** (standalone components, signals, `viewChild`, `input`, `output`)
+- **Tailwind CSS 4** + **DaisyUI 5** (utility-first styling, no Angular Material)
+- **Signals** (reactive state management without RxJS stores)
+- **RxJS** (observables for async operations, `takeUntilDestroyed` for cleanup)
+- **Reactive Forms** (with custom validators)
+- **Vitest** (unit tests)
+
+## Project Structure
+
+```
+src/app/
+├── shared/
+│   ├── components/
+│   │   ├── pagination/          # Pagination component + service
+│   │   ├── modals/              # Reusable confirmation modal
+│   │   └── form-error-label/    # Form validation error display
+│   ├── directives/
+│   │   └── uppercase.directive  # Transforms input to uppercase
+│   ├── interceptors/
+│   │   └── loading.interceptor  # HttpInterceptorFn for loading state
+│   └── services/
+│       └── loading.service      # Global loading state (signal-based)
+├── super-hero/
+│   ├── models/
+│   │   └── super-hero.interface # SuperHero type definition
+│   ├── services/
+│   │   └── super-hero.service   # CRUD operations with simulated delay
+│   ├── components/
+│   │   └── hero-list/           # Hero table with edit/delete actions
+│   └── pages/
+│       ├── home-page/           # Main page: list + search + pagination
+│       └── details-page/        # Create/Edit hero form
+└── utils/
+    └── form-utils              # Form validation helpers
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## How to Run in Development
 
 ```bash
-ng generate component component-name
+# Clone the repo
+git clone https://github.com/Andres3232/RIU-Frontend-Andres-Murgo.git
+cd RIU-Frontend-Andres-Murgo
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Open [http://localhost:4200](http://localhost:4200) in your browser.
+
+## How to Run Tests
 
 ```bash
-ng generate --help
+npm run test
 ```
 
-## Building
-
-To build the project run:
+## How to run with Docker
 
 ```bash
-ng build
+# Build the Docker image
+docker build -t super-hero-app .
+# Run the container
+docker run -p 4200:80 super-hero-app
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Then access the app at [http://localhost:4200](http://localhost:4200).
 
-## Running unit tests
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
 
-```bash
-ng test
-```
+## Key Architectural Decisions
 
-## Running end-to-end tests
+- Tailwind CSS + DaisyUI for a lightweight, customizable UI
+- **Signals over BehaviorSubject** — Modern Angular reactivity (`signal`, `computed`, `effect`)
+- **Functional HTTP Interceptor** — `HttpInterceptorFn` (Angular 19 style) for loading state
+- **Standalone components** — No NgModules, tree-shakable by default
+- **Lazy-loaded routes** — Pages loaded on demand for optimal bundle size
+- **`takeUntilDestroyed`** — Automatic subscription cleanup without `ngOnDestroy`
+- **In-memory data** — Service simulates async operations with `Observable` + `delay()`
 
-For end-to-end (e2e) testing, run:
+## Notes
 
-```bash
-ng e2e
-```
+- All data is handled locally (in-memory signal array, no backend required).
+- Write operations (create, update, delete) simulate latency with a 600ms delay to demonstrate the loading interceptor.
+- This challenge focuses on Angular best practices, modular architecture, and clean code.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Author
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Andrés Murgo
