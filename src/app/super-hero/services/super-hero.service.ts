@@ -1,6 +1,6 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { delay, Observable, of, tap } from 'rxjs';
-import type { SuperHero } from '../models/super-hero.interface';
+import type { SuperHero } from '@models/super-hero.interface';
 import { LoadingService } from '@shared/services/loading.service';
 
 const SIMULATED_DELAY = 600;

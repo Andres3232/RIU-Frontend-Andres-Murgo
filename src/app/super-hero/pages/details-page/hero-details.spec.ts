@@ -5,7 +5,7 @@ import { BehaviorSubject, of } from 'rxjs';
 import { signal } from '@angular/core';
 import HeroDetails from './hero-details';
 import { SuperHeroService } from '../../services/super-hero.service';
-import type { SuperHero } from '../../models/super-hero.interface';
+import type { SuperHero } from '@models/super-hero.interface';
 
 const MOCK_HERO: SuperHero = {
   id: 1,

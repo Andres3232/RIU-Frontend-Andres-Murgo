@@ -12,6 +12,10 @@ module.exports = {
     ],
   },
   moduleFileExtensions: ['ts', 'html', 'js', 'json', 'mjs'],
+  moduleNameMapper: {
+    '^@shared/(.*)$': '<rootDir>/src/app/shared/$1',
+    '^@models/(.*)$': '<rootDir>/src/app/super-hero/models/$1',
+  },
   testMatch: ['**/+(*.)+(spec).+(ts)'],
   coverageDirectory: 'coverage',
   coverageReporters: ['html', 'text-summary'],
