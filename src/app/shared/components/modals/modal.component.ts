@@ -18,6 +18,7 @@ import {
 })
 export class ModalComponent {
   @ViewChild('dialogRef') dialogRef!: ElementRef<HTMLDialogElement>;
+  heroName = input<string>();
   confirmRemove = output<boolean>();
 
 

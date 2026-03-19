@@ -47,5 +47,6 @@
 
 <app-modal
  #modal
+ [heroName]="hero()?.name"
  (confirmRemove)="onDelete($event)"
 />
