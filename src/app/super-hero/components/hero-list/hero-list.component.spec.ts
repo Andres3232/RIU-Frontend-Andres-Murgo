@@ -2,9 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, signal } from '@angular/core';
 import { HeroListComponent } from './hero-list.component';
 import { provideRouter } from '@angular/router';
-
 import { By } from '@angular/platform-browser';
-import type { SuperHero } from '../../models/super-hero.interface';
+import type { SuperHero } from '@models/super-hero.interface';
+
 
 // Host component to pass inputs
 @Component({

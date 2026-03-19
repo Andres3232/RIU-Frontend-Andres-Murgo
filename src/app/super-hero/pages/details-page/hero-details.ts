@@ -3,7 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import type { SuperHero } from '@models/super-hero.interface';
-import { SuperHeroService } from '../../services/super-hero.service';
+import { SuperHeroService } from '@services/super-hero.service';
 import { FormErrorLabel } from '@shared/components/form-error-label/form-error-label';
 import { UppercaseDirective } from '@shared/directives/uppercase.directive';
 import { toSignal } from '@angular/core/rxjs-interop';

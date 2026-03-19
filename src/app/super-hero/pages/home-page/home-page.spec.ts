@@ -7,9 +7,9 @@ import {
 import { provideRouter, Router } from '@angular/router';
 import { of } from 'rxjs';
 import HomePage from './home-page';
-import { SuperHeroService } from '../../services/super-hero.service';
 import type { SuperHero } from '@models/super-hero.interface';
 import { PaginationService } from '@shared/components/pagination/pagination.service';
+import { SuperHeroService } from '@services/super-hero.service';
 
 const MOCK_HEROES: SuperHero[] = [
   { id: 1, name: 'Superman', power: 'Flight', description: 'Man of Steel' },

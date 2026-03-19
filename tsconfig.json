@@ -6,7 +6,8 @@
     "outDir": "./dist/out-tsc",
     "paths": {
       "@shared/*": ["./src/app/shared/*"],
-      "@models/*": ["./src/app/super-hero/models/*"]
+      "@models/*": ["./src/app/super-hero/models/*"],
+      "@services/*": ["./src/app/super-hero/services/*"]
     },
     "strict": true,
     "noImplicitOverride": true,
