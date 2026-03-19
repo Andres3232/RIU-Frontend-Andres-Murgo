@@ -26,13 +26,11 @@ export class HeroListComponent {
 
   openModal(hero: SuperHero): void {
     this.hero.set(hero);
-    console.log('Opening modal for hero ID:', hero.id);
     this.modal.open();
   }
 
   onDelete(confirmRemove: boolean): void {
     const hero = this.hero();
-    console.log(hero)
     if (confirmRemove && hero) {
       this.delete.emit(hero);
     }

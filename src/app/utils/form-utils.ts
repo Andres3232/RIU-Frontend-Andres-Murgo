@@ -3,7 +3,6 @@ import { FormGroup, ValidationErrors } from '@angular/forms';
 export class FormUtils {
   static getTextError(errors: ValidationErrors) {
     for (const key of Object.keys(errors)) {
-      console.log(key);
       switch (key) {
         case 'required':
           return 'This field is required';
