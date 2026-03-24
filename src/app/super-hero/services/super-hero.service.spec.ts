@@ -6,13 +6,19 @@ describe('SuperHeroService', () => {
   let service: SuperHeroService;
 
   beforeEach(() => {
+    localStorage.clear();
     TestBed.configureTestingModule({});
     service = TestBed.inject(SuperHeroService);
+  });
+
+  afterEach(() => {
+    localStorage.clear();
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
   describe('getAll', () => {
     it('should return all heroes', () => {
       // Act
@@ -22,6 +28,7 @@ describe('SuperHeroService', () => {
       expect(heroes.length).toBe(10);
     });
   });
+
   describe('getById', () => {
     it('should return a hero when id exists', () => {
       // Arrange
@@ -47,6 +54,7 @@ describe('SuperHeroService', () => {
       expect(hero).toBeUndefined();
     });
   });
+
   describe('searchByName', () => {
     it('should return heroes matching the search term', () => {
       // Arrange
@@ -86,6 +94,7 @@ describe('SuperHeroService', () => {
       expect(results.length).toBe(0);
     });
   });
+
   describe('create', () => {
     it('should add a new hero with auto-generated id', async () => {
       // Arrange
@@ -205,6 +214,48 @@ describe('SuperHeroService', () => {
       // Assert
       expect(service.getById(otherHeroId)).toBeDefined();
       expect(service.getById(otherHeroId)!.name).toBe('Batman');
+    });
+  });
+
+  describe('localStorage persistence', () => {
+    it('should persist heroes to localStorage after create', async () => {
+      // Arrange
+      const newHero = {
+        name: 'Aquaman',
+        power: 'Underwater Breathing',
+        description: 'King of Atlantis',
+      };
+
+      // Act
+      await firstValueFrom(service.create(newHero));
+
+      // Assert
+      const stored = JSON.parse(localStorage.getItem('superHeroes')!);
+      expect(stored.find((h: any) => h.name === 'Aquaman')).toBeDefined();
+    });
+
+    it('should persist heroes to localStorage after delete', async () => {
+      // Arrange
+      const heroId = 1;
+
+      // Act
+      await firstValueFrom(service.delete(heroId));
+
+      // Assert
+      const stored = JSON.parse(localStorage.getItem('superHeroes')!);
+      expect(stored.find((h: any) => h.id === heroId)).toBeUndefined();
+    });
+
+    it('should persist heroes to localStorage after update', async () => {
+      // Arrange
+      const heroId = 1;
+
+      // Act
+      await firstValueFrom(service.update(heroId, { name: 'Superman Prime' }));
+
+      // Assert
+      const stored = JSON.parse(localStorage.getItem('superHeroes')!);
+      expect(stored.find((h: any) => h.id === heroId)!.name).toBe('Superman Prime');
     });
   });
 });

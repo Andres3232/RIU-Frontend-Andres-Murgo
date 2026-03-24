@@ -120,8 +120,6 @@ describe('HomePage', () => {
 
     it('should return correct slice for page 2', () => {
       // Arrange
-      component.searchTerm.set('');
-      fixture.detectChanges();
       component.paginationService.setPage(2);
 
       // Act

@@ -4,68 +4,26 @@ import type { SuperHero } from '@models/super-hero.interface';
 import { LoadingService } from '@shared/services/loading.service';
 
 const SIMULATED_DELAY = 600;
+const STORAGE_KEY = 'superHeroes';
+
+const DEFAULT_HEROES: SuperHero[] = [
+  { id: 1, name: 'Superman', power: 'Flight', description: 'Man of Steel' },
+  { id: 2, name: 'Batman', power: 'Martial Arts', description: 'The Dark Knight' },
+  { id: 3, name: 'Wonder Woman', power: 'Super Strength', description: 'Amazonian Warrior' },
+  { id: 4, name: 'Flash', power: 'Super Speed', description: 'The Fastest Man Alive' },
+  { id: 5, name: 'Green Lantern', power: 'Energy Manipulation', description: 'Intergalactic Peacekeeper' },
+  { id: 6, name: 'Spider-Man', power: 'Wall-Crawling', description: 'Friendly Neighborhood Spider-Man' },
+  { id: 7, name: 'Iron Man', power: 'Genius-level Intellect', description: 'Billionaire Industrialist' },
+  { id: 8, name: 'Captain America', power: 'Super Soldier', description: 'Leader of the Avengers' },
+  { id: 9, name: 'Thor', power: 'God of Thunder', description: 'Asgardian Warrior' },
+  { id: 10, name: 'Hulk', power: 'Super Strength', description: 'The Incredible Hulk' },
+];
 
 @Injectable({ providedIn: 'root' })
 export class SuperHeroService {
   private loadingService = inject(LoadingService);
 
-  private superHeroes = signal<SuperHero[]>([
-    { id: 1, name: 'Superman', power: 'Flight', description: 'Man of Steel' },
-    {
-      id: 2,
-      name: 'Batman',
-      power: 'Martial Arts',
-      description: 'The Dark Knight',
-    },
-    {
-      id: 3,
-      name: 'Wonder Woman',
-      power: 'Super Strength',
-      description: 'Amazonian Warrior',
-    },
-    {
-      id: 4,
-      name: 'Flash',
-      power: 'Super Speed',
-      description: 'The Fastest Man Alive',
-    },
-    {
-      id: 5,
-      name: 'Green Lantern',
-      power: 'Energy Manipulation',
-      description: 'Intergalactic Peacekeeper',
-    },
-    {
-      id: 6,
-      name: 'Spider-Man',
-      power: 'Wall-Crawling',
-      description: 'Friendly Neighborhood Spider-Man',
-    },
-    {
-      id: 7,
-      name: 'Iron Man',
-      power: 'Genius-level Intellect',
-      description: 'Billionaire Industrialist',
-    },
-    {
-      id: 8,
-      name: 'Captain America',
-      power: 'Super Soldier',
-      description: 'Leader of the Avengers',
-    },
-    {
-      id: 9,
-      name: 'Thor',
-      power: 'God of Thunder',
-      description: 'Asgardian Warrior',
-    },
-    {
-      id: 10,
-      name: 'Hulk',
-      power: 'Super Strength',
-      description: 'The Incredible Hulk',
-    },
-  ]);
+  private superHeroes = signal<SuperHero[]>(this.loadFromStorage());
 
   getAll = computed(() => this.superHeroes());
 
@@ -107,7 +65,25 @@ export class SuperHeroService {
     return of(value).pipe(
       delay(SIMULATED_DELAY),
       tap(() => operation()),
+      tap(() => this.saveToStorage()),
       tap({ finalize: () => this.loadingService.hide() }),
     );
+  }
+
+  private loadFromStorage(): SuperHero[] {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return stored ? JSON.parse(stored) : DEFAULT_HEROES;
+    } catch {
+      return DEFAULT_HEROES;
+    }
+  }
+
+  private saveToStorage(): void {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.superHeroes()));
+    } catch {
+      // localStorage not available — silently ignore
+    }
   }
 }
