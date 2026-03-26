@@ -10,10 +10,11 @@ import { FormUtils } from '@utils/form-utils';
 export class FormErrorLabel {
   control = input.required<AbstractControl>();
 
-  get errorMessage() {
-    const errors: ValidationErrors = this.control().errors || {};
+  getErrorMessage(): string | null {
+    const control = this.control();
+    const errors: ValidationErrors = control.errors || {};
 
-    return this.control().touched && Object.keys(errors).length > 0
+    return control.touched && Object.keys(errors).length > 0
       ? FormUtils.getTextError(errors)
       : null;
   }
