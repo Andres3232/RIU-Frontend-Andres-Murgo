@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  CUSTOM_ELEMENTS_SCHEMA,
   ElementRef,
   input,
   output,
@@ -14,7 +13,6 @@ import {
   templateUrl: './modal.component.html',
   standalone: true,
   imports: [],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ModalComponent {
   @ViewChild('dialogRef') dialogRef!: ElementRef<HTMLDialogElement>;
