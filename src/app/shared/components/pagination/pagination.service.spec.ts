@@ -5,7 +5,9 @@ describe('PaginationService', () => {
   let service: PaginationService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [PaginationService],
+    });
     service = TestBed.inject(PaginationService);
   });
 

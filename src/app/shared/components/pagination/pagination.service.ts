@@ -1,6 +1,6 @@
 import { Injectable, signal, computed } from '@angular/core';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class PaginationService {
   private _currentPage = signal(1);
   private _totalItems = signal(0);

@@ -21,6 +21,7 @@ import { SuperHeroService } from '@services/super-hero.service';
 @Component({
   selector: 'app-home-page',
   imports: [HeroListComponent, PaginationComponent],
+  providers: [PaginationService],
   templateUrl: './home-page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
