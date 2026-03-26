@@ -11,10 +11,13 @@ export class UppercaseDirective {
   @HostListener('input', ['$event'])
   onInput(event: Event) {
     const input = event.target as HTMLInputElement;
+    const start = input.selectionStart;
+    const end = input.selectionEnd;
     const uppercased = input.value.toUpperCase();
-    input.value = uppercased;
-    if (this.ngControl.control) {
+
+    if (this.ngControl.control && input.value !== uppercased) {
       this.ngControl.control.setValue(uppercased, { emitEvent: false });
+      input.setSelectionRange(start, end);
     }
   }
 }
