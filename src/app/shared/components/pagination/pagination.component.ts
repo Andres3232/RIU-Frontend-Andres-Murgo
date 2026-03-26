@@ -4,6 +4,7 @@ import {
   input,
   linkedSignal,
   output,
+  computed,
 } from '@angular/core';
 
 @Component({
@@ -19,8 +20,8 @@ export class PaginationComponent {
 
   activePage = linkedSignal(this.currentPage);
 
-  pages = () => {
+  pages = computed(() => {
     const total = this.totalPages();
     return Array.from({ length: total }, (_, i) => i + 1);
-  };
+  });
 }
